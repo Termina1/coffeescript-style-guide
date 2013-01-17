@@ -170,7 +170,7 @@ When chainging functions use parentheses:
 foo(4).bar(8)
 ```
 
-Remember, it's better to omit parentheses, because it is the coffee-script way to do stuff, but try to keep code readable:
+Remember, it's better to omit parentheses, because it is the coffeescript way to do stuff, but try to keep code readable:
 
 ```coffeescript
 print inspect value
