@@ -208,18 +208,18 @@ just = true
 #good
 
 if just
-   test 1
-   foo 2
+  test 1
+  foo 2
    
 unless just
-   test 3
-   foo 4
+  test 3
+  foo 4
    
 #bad
 
 if not just
-   test 3
-   foo 4
+  test 3
+  foo 4
 
 ```
 
@@ -325,18 +325,18 @@ Array.prototype.slice # No
 Prefer `@property` over `this.property`.
 
 ```coffeescript
-return @property # Yes
-return this.property # No
+@property # Yes
+this.property # No
 ```
 
-However, avoid the use of **standalone** `@`:
+Always prefer `@` over `this`.
 
 ```coffeescript
-return this # Yes
-return @ # No
+res = ->
+  @
 ```
 
-Avoid `return` where not required, unless the explicit return increases clarity.
+Avoid `return` where not required.
 
 Use splats (`...`) when working with functions that accept variable numbers of arguments:
 
