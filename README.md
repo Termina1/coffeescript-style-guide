@@ -1,48 +1,5 @@
 # CoffeeScript Style Guide
 
-This guide presents a collection of best-practices and coding conventions for the [CoffeeScript][coffeescript] programming language.
-
-This guide is intended to be community-driven, and contributions are highly encouraged.
-
-Please note that this is a work-in-progress: there is much more that can be specified, and some of the guidelines that have been specified may not be deemed to be idiomatic by the community (in which case, these offending guidelines will be modified or removed, as appropriate).
-
-## Inspiration
-
-The details in this guide have been very heavily inspired by several existing style guides and other resources. In particular:
-
-- [PEP-8][pep8]: Style Guide for Python Code
-- Bozhidar Batsov's [Ruby Style Guide][ruby-style-guide]
-- [Google's JavaScript Style Guide][google-js-styleguide]
-- [Common CoffeeScript Idioms][common-coffeescript-idioms]
-- Thomas Reynolds' [CoffeeScript-specific Style Guide][coffeescript-specific-style-guide]
-- Jeremy Ashkenas' [code review][spine-js-code-review] of [Spine][spine-js]
-- The [CoffeeScript FAQ][coffeescript-faq]
-
-## Table of Contents
-
-* [The CoffeeScript Style Guide](#guide)
-    * [Code Layout](#code_layout)
-        * [Tabs or Spaces?](#tabs_or_spaces)
-        * [Maximum Line Length](#maximum_line_length)
-        * [Blank Lines](#blank_lines)
-        * [Trailing Whitespace](#trailing_whitespace)
-        * [Encoding](#encoding)
-    * [Module Imports](#module_imports)
-    * [Whitespace in Expressions and Statements](#whitespace)
-    * [Comments](#comments)
-        * [Block Comments](#block_comments)
-        * [Inline Comments](#inline_comments)
-    * [Naming Conventions](#naming_conventions)
-    * [Functions](#functions)
-    * [Strings](#strings)
-    * [Conditionals](#conditionals)
-    * [Looping and Comprehensions](#looping_and_comprehensions)
-    * [Extending Native Objects](#extending_native_objects)
-    * [Exceptions](#exceptions)
-    * [Annotations](#annotations)
-    * [Miscellaneous](#miscellaneous)
-
-<a name="code_layout"/>
 ## Code layout
 
 <a name="tabs_or_spaces"/>
@@ -53,7 +10,7 @@ Use **spaces only**, with **2 spaces** per indentation level. Never mix tabs and
 <a name="maximum_line_length"/>
 ### Maximum Line Length
 
-Limit all lines to a maximum of 79 characters.
+Limit all lines to a maximum of 80 characters.
 
 <a name="blank_lines"/>
 ### Blank Lines
@@ -139,60 +96,6 @@ Additional recommendations:
            fooBar = 3
         ```
 
-<a name="comments"/>
-## Comments
-
-If modifying code that is described by an existing comment, update the comment such that it accurately reflects the new code. (Ideally, improve the code to obviate the need for the comment, and delete the comment entirely.)
-
-The first word of the comment should be capitalized, unless the first word is an identifier that begins with a lower-case letter.
-
-If a comment is short, the period at the end can be omitted.
-
-<a name="block_comments"/>
-### Block Comments
-
-Block comments apply to the block of code that follows them.
-
-Each line of a block comment starts with a `#` and a single space, and should be indented at the same level of the code that it describes.
-
-Paragraphs inside of block comments are separated by a line containing a single `#`.
-
-```coffeescript
-  # This is a block comment. Note that if this were a real block
-  # comment, we would actually be describing the proceeding code.
-  #
-  # This is the second paragraph of the same block comment. Note
-  # that this paragraph was separated from the previous paragraph
-  # by a line containing a single comment character.
-
-  init()
-  start()
-  stop()
-```
-
-<a name="inline_comments"/>
-### Inline Comments
-
-Inline comments are placed on the line immediately above the statement that they are describing. If the inline comment is sufficiently short, it can be placed on the same line as the statement (separated by a single space from the end of the statement).
-
-All inline comments should start with a `#` and a single space.
-
-The use of inline comments should be limited, because their existence is typically a sign of a code smell.
-
-Do not use inline comments when they state the obvious:
-
-```coffeescript
-  # No
-  x = x + 1 # Increment x
-```
-
-However, inline comments can be useful in certain scenarios:
-
-```coffeescript
-  # Yes
-  x = x + 1 # Compensate for border
-```
-
 <a name="naming_conventions"/>
 ## Naming Conventions
 
@@ -243,46 +146,37 @@ In cases where method calls are being chained and the code does not fit on a sin
   .reduce((x, y) -> x + y)
 ```
 
-When calling functions, choose to omit or include parentheses in such a way that optimizes for readability. Keeping in mind that "readability" can be subjective, the following examples demonstrate cases where parentheses have been omitted or included in a manner that the community deems to be optimal:
+When calling a function if it has at least one argument you should omit parentheses:
 
 ```coffeescript
 baz 12
+```
 
-brush.ellipse x: 10, y: 20 # Braces can also be omitted or included for readability
+If it has no arguments, but we are going to use a returning value, you should use parentheses
 
+```coffeescript
+res = baz()
+```
+
+If it has no arguments and we do not care about returning value, you should use *do*:
+
+```coffeescript
+do baz
+```
+
+When chainging functions, use parentheses:
+
+```coffeescript
 foo(4).bar(8)
+```
 
-obj.value(10, 20) / obj.value(20, 10)
+Remember, it's better to omit parentheses, because it is the coffee-script way to do stuff, but try to keep code readable:
 
+```coffeescript
 print inspect value
 
 new Tag(new Value(a, b), new Arg(c))
 ```
-
-You will sometimes see parentheses used to group functions (instead of being used to group function parameters). Examples of using this style (hereafter referred to as the "function grouping style"):
-
-```coffeescript
-($ '#selektor').addClass 'klass'
-
-(foo 4).bar 8
-```
-
-This is in contrast to:
-
-```coffeescript
-$('#selektor').addClass 'klass'
-
-foo(4).bar 8
-```
-
-In cases where method calls are being chained, some adopters of this style prefer to use function grouping for the initial call only:
-
-```coffeescript
-($ '#selektor').addClass('klass').hide() # Initial call only
-(($ '#selektor').addClass 'klass').hide() # All calls
-```
-
-The function grouping style is not recommended. However, **if the function grouping style is adopted for a particular project, be consistent with its usage.**
 
 <a name="strings"/>
 ## Strings
@@ -299,22 +193,34 @@ Prefer single quoted strings (`''`) instead of double quoted (`""`) strings, unl
 <a name="conditionals"/>
 ## Conditionals
 
-Favor `unless` over `if` for negative conditions.
 
-Instead of using `unless...else`, use `if...else`:
+If you have one line expression use post-condition:
 
 ```coffeescript
-  # Yes
-  if true
-    ...
-  else
-    ...
+do anything unless something
+```
 
-  # No
-  unless false
-    ...
-  else
-    ...
+Try to avoid *not* keyword if possible using *if* or *unless*:
+
+```coffeescript
+just = true
+
+#good
+
+if just
+   test 1
+   foo 2
+   
+unless just
+   test 3
+   foo 4
+   
+#bad
+
+if not just
+   test 3
+   foo 4
+
 ```
 
 Multi-line if/else clauses should use indentation:
@@ -359,19 +265,6 @@ object = one: 1, two: 2
 alert("#{key} = #{value}") for key, value of object
 ```
 
-<a name="#extending_native_objects"/>
-## Extending Native Objects
-
-Do not modify native objects.
-
-For example, do not modify `Array.prototype` to introduce `Array#forEach`.
-
-<a name="exceptions"/>
-## Exceptions
-
-Do not suppress exceptions.
-
-<a name="annotations"/>
 ## Annotations
 
 Use annotations when necessary to describe a specific action that must be taken against the indicated block of code.
