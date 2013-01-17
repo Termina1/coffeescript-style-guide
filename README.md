@@ -158,13 +158,13 @@ If it has no arguments, but we are going to use a returning value, you should us
 res = baz()
 ```
 
-If it has no arguments and we do not care about returning value, you should use *do*:
+If it has no arguments and we do not care about returning value you should use *do*:
 
 ```coffeescript
 do baz
 ```
 
-When chainging functions, use parentheses:
+When chainging functions use parentheses:
 
 ```coffeescript
 foo(4).bar(8)
@@ -175,7 +175,7 @@ Remember, it's better to omit parentheses, because it is the coffee-script way t
 ```coffeescript
 print inspect value
 
-new Tag(new Value(a, b), new Arg(c))
+new Tag new Value(a, b), new Arg(c) 
 ```
 
 <a name="strings"/>
